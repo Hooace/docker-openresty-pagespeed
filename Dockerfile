@@ -1,6 +1,5 @@
-FROM devgeniem/base:debian
-
-MAINTAINER Onni Hakala <onni.hakala@geniem.com>
+FROM ci.gpilvi.com:5000/devgeniem/base-ubuntu:latest
+MAINTAINER Ville Pietarinen - Geniem Oy <ville.pietarinen-nospam@geniem.com>
 
 # Build Arguments for openresty/nginx
 ARG RESTY_VERSION="1.11.2.1"
@@ -68,6 +67,7 @@ ARG RESTY_CONFIG_OPTIONS="\
 
     --add-module=/tmp/ngx_http_redis-0.3.7-master \
     --add-module=/tmp/ngx_pagespeed-${PAGESPEED_VERSION}-beta \
+    --add-module=/tmp/ngx_cache_purge-2.3 \
     --with-openssl=/tmp/openssl-${RESTY_OPENSSL_VERSION} \
     "
 
@@ -96,6 +96,9 @@ RUN \
     curl -L https://dl.google.com/dl/page-speed/psol/${PAGESPEED_VERSION}.tar.gz | tar -zx && \
 
     cd /tmp/ && \
+    # Download Nginx cache purge module
+    echo "Downloading Nginx cache purge module..." && \
+    curl -L http://labs.frickle.com/files/ngx_cache_purge-2.3.tar.gz | tar -zx && \
 
     # Download OpenSSL
     echo "Downloading OpenSSL..." && \
