@@ -1,4 +1,4 @@
-FROM devgeniem/base:debian
+FROM ci.gpilvi.com:5000/devgeniem/base-ubuntu:latest
 MAINTAINER Ville Pietarinen - Geniem Oy <ville.pietarinen-nospam@geniem.com>
 
 # Build Arguments for openresty/nginx
